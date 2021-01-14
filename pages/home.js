@@ -1,9 +1,11 @@
 import Nav from "../components/Nav";
+import EmptyLog from "../components/EmptyLog";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-gray-400 h-screen">
       <Nav />
+      <EmptyLog />
     </div>
   );
 };
