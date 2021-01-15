@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
-const Autocomplete = ({ suggestions }) => {
+const Autocomplete = ({
+  suggestions,
+  setinputText,
+  inputText,
+  dailyExercises,
+  setDailyExercises,
+}) => {
   const [displayOptions, setDisplayOptions] = useState(false); //if options are displayed or not
   const [options, setOptions] = useState([]); //render all the options
-  const [searchInput, setSearchInput] = useState(""); //search input
+  const [disabled, setDisabled] = useState(true); //add button disabales if someone is typing random stuff
+  const wrapperRef = useRef(null);
 
   let exerciseArr = []; //empty array to push all exercises
 
@@ -16,71 +23,99 @@ const Autocomplete = ({ suggestions }) => {
     setOptions(exerciseArr);
   }, []);
 
+  //handleClickOutside and the useEffect below handles the displayOptions once the input text in not in focus.
+  //It toggles the options off, if the input is not in focus
+  useEffect(() => {
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = (event) => {
+    const { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplayOptions(false);
+    }
+  };
+
   // setExercise lets searchInput fill up the exercise that user clicks on and then set the displayOptions to false
   const setExercise = (exercise) => {
-    setSearchInput(exercise);
+    setinputText(exercise);
     setDisplayOptions(false);
   };
 
-  return (
-    <div className="flex items-center flex-col mt-10">
-      <input
-        type="text"
-        placeholder="Search exercise"
-        value={searchInput}
-        onClick={() => {
-          setDisplayOptions(!displayOptions);
-        }}
-        onChange={(e) => {
-          setSearchInput(e.target.value);
-        }}
-      />
+  //displays options that match user search
+  const displayedOptions =
+    displayOptions && inputText ? (
+      <div>
+        {options
+          .filter(
+            (suggestion) =>
+              suggestion.toLowerCase().indexOf(inputText.toLowerCase()) > -1
+          )
+          .map((v, i) => {
+            return (
+              <div
+                key={i}
+                onClick={() => setExercise(v)}
+                onKeyDown={() => setExercise(v)}
+                tabIndex="0"
+              >
+                {v}
+              </div>
+            );
+          })}
+      </div>
+    ) : (
+      <div></div>
+    );
 
-      {/* filters through the exercise options based on searchInput and render all the exercises that match*/}
-      {displayOptions && searchInput ? (
-        <div>
-          {options
-            .filter(
-              (suggestion) =>
-                suggestion.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
-            )
-            .map((v, i) => {
-              return (
-                <div key={i} onClick={() => setExercise(v)}>
-                  <span>{v}</span>
-                </div>
-              );
-            })}
-        </div>
-      ) : (
-        <div></div>
-      )}
+  //sets inputText state, adds exercises to daily exercise array, sets inputText to empty
+  const handleAddClick = () => {
+    setinputText(inputText);
+    setDailyExercises([...dailyExercises, { exercise: inputText }]);
+    setinputText("");
+  };
+
+
+  useEffect(() => {
+    const handleDisable = options.some((v) => v === inputText);
+    setDisabled(handleDisable);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center mt-10">
+      <div className="flex justify-center">
+        <input
+          className="mr-5"
+          type="text"
+          placeholder="Search exercise"
+          value={inputText}
+          onClick={() => {
+            setDisplayOptions(!displayOptions);
+          }}
+          onChange={(e) => {
+            setinputText(e.target.value);
+            options.map((v) => v.includes(e.target.value.toLowerCase()))
+              ? setDisabled(false)
+              : setDisabled(true);
+          }}
+        />
+        <button
+          disabled={options.some((v) => v === inputText) ? disabled : !disabled}
+          href="#"
+          onClick={handleAddClick}
+          className="bg-gray-900 text-gray-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 hover:text-white disabled:bg-opacity-50"
+        >
+          Add
+        </button>
+      </div>
+
+      {/* filters through the exercise options based on inputText and render all the exercises that match*/}
+      <div ref={wrapperRef}>{displayedOptions}</div>
     </div>
   );
 };
 
 export default Autocomplete;
-
-// let searchResults;
-
-// if (displayOptions && searchInput) {
-//   options.length
-//     ? (searchResults = (
-//         <div>
-//           {options
-//             .filter(
-//               (suggestion) =>
-//                 suggestion.toLowerCase().indexOf(searchInput.toLowerCase()) >
-//                 -1
-//             )
-//             .map((v, i) => {
-//               return (
-//                 <div key={i} onClick={() => setExercise(v)}>
-//                   <span>{v}</span>
-//                 </div>
-//               );
-//             })}
-//         </div>
-//       ))
-//     : (searchResults = <div>No suggesions</div>);
-// }
