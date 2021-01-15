@@ -1,18 +1,18 @@
 import { Add, Remove } from "../components/AddRemove";
 import NumberInput from "./NumberInput";
 
-const Workout = () => {
+const Workout = ({ exercise, setDailyExercises, dailyExercises }) => {
+  const handleDelete = () => {
+    setDailyExercises(
+      dailyExercises.filter((exer) => exer.exercise !== exercise)
+    );
+  };
+
   return (
-    <div className="flex ">
-      <div></div>
+    <div className="flex bg-gray-400 h-auto ">
+      <div>{exercise}</div>
       <div>
         <p className="text-center">Weight</p>
-        <Remove />
-        <NumberInput />
-        <Add />
-      </div>
-      <div>
-        <p className="text-center">Sets</p>
         <Remove />
         <NumberInput />
         <Add />
@@ -23,6 +23,7 @@ const Workout = () => {
         <NumberInput />
         <Add />
       </div>
+      <button onClick={handleDelete}>X</button>
     </div>
   );
 };

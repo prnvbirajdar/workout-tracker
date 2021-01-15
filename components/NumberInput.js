@@ -1,5 +1,5 @@
 const NumberInput = () => {
-  return <input type="numbder" />;
+  return <input type="number" className="w-10" />;
 };
 
 export default NumberInput;

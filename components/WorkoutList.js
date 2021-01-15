@@ -1,10 +1,17 @@
-
 import Workout from "./Workout";
 
-const WorkoutList = () => {
+const WorkoutList = ({ dailyExercises, setDailyExercises }) => {
   return (
     <div className="flex flex-col items-center mt-10">
-      <Workout />
+      {dailyExercises.map((v, i) => (
+        <Workout
+          key={i}
+          exercise={v.exercise}
+          setDailyExercises={setDailyExercises}
+          dailyExercises={dailyExercises}
+          value={v}
+        />
+      ))}
     </div>
   );
 };

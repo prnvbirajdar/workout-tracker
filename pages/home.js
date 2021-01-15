@@ -13,7 +13,7 @@ const Home = () => {
   console.log(dailyExercises);
 
   return (
-    <div className="bg-gray-400 h-screen ">
+    <div className="bg-gray-400 h-screen">
       <Nav />
       <EmptyLog />
       <Autocomplete
@@ -37,7 +37,10 @@ const Home = () => {
         }}
       />
 
-      <WorkoutList />
+      <WorkoutList
+        dailyExercises={dailyExercises}
+        setDailyExercises={setDailyExercises}
+      />
     </div>
   );
 };

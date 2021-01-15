@@ -14,4 +14,4 @@ const EmptyLog = () => {
 
 export default EmptyLog;
 
-("t hover:bg-gray-700 hover:text-white");
+//("t hover:bg-gray-700 hover:text-white");
