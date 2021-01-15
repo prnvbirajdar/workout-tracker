@@ -78,7 +78,6 @@ const Autocomplete = ({
     setinputText("");
   };
 
-
   useEffect(() => {
     const handleDisable = options.some((v) => v === inputText);
     setDisabled(handleDisable);
@@ -88,6 +87,7 @@ const Autocomplete = ({
     <div className="flex flex-col items-center mt-10">
       <div className="flex justify-center">
         <input
+          required
           className="mr-5"
           type="text"
           placeholder="Search exercise"
