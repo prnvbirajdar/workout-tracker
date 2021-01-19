@@ -6,10 +6,11 @@ import Autocomplete from "../components/Autocomplete";
 import WorkoutList from "../components/WorkoutList";
 
 const Home = () => {
+  const [reps, setReps] = useState(0); //input reps
+  const [weight, setWeight] = useState(0); //input weights
   const [inputText, setinputText] = useState(""); //search input
   const [dailyExercises, setDailyExercises] = useState([]); //array of all the exercises
 
-  console.log(inputText);
   console.log(dailyExercises);
 
   return (
@@ -38,8 +39,13 @@ const Home = () => {
       />
 
       <WorkoutList
+        inputText={inputText}
         dailyExercises={dailyExercises}
         setDailyExercises={setDailyExercises}
+        reps={reps}
+        setReps={setReps}
+        weight={weight}
+        setWeight={setWeight}
       />
     </div>
   );

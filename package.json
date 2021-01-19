@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^0.2.0",
+    "moment": "^2.29.1",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

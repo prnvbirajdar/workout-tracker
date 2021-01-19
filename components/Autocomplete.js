@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import moment from "moment";
 
 const Autocomplete = ({
   suggestions,
@@ -74,7 +75,13 @@ const Autocomplete = ({
   //sets inputText state, adds exercises to daily exercise array, sets inputText to empty
   const handleAddClick = () => {
     setinputText(inputText);
-    setDailyExercises([...dailyExercises, { exercise: inputText }]);
+    setDailyExercises([
+      ...dailyExercises,
+      {
+        exercise: inputText,
+        time: moment().format("LL"),
+      },
+    ]);
     setinputText("");
   };
 

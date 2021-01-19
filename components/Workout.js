@@ -1,17 +1,41 @@
-import NumberInput from "./NumberInput";
+// import WorkoutNumbers from "./WorkoutNumbers";
+import moment from "moment";
 
-const Workout = ({ exercise, setDailyExercises, dailyExercises }) => {
+const Workout = ({
+  exercise,
+  setDailyExercises,
+  dailyExercises,
+  reps,
+  weight,
+  setReps,
+  setWeight,
+  inputText,
+}) => {
+  //data: [{ set: { weight: 2, reps: 0 } }],
+
+  const handleSaveSet = () => {
+    dailyExercises.map((e) => e.data.weight.push(weight));
+  };
+
+  const handleDeleteSet = () => {};
+
+  const handleAddSet = () => {
+    setWeight(weight);
+    setReps(reps);
+
+    setDailyExercises([
+      { ...dailyExercises.exercise, data: [{ set: { weight: weight, reps: reps } }] },
+    ]);
+  };
+
   const handleDelete = () => {
     setDailyExercises(
       dailyExercises.filter((exer) => exer.exercise !== exercise)
     );
   };
 
-  const handleAddSet = () => {};
-
-  const handleSaveSet = () => {};
-
-  const handleDeleteSet = () => {};
+  console.log(weight);
+  // console.log(dailyExercises.map((e) => e.data.weight.map((w) => <p>hi</p>)));
 
   return (
     <div className="flex bg-gray-400 h-auto flex-col">
@@ -24,14 +48,27 @@ const Workout = ({ exercise, setDailyExercises, dailyExercises }) => {
           <button onClick={handleDelete}>Delete Exercise</button>
         </div>
       </div>
+
       <div className="text-center flex justify-center">
         <div className="mx-2">
-          <p className="text-center">Weight</p>
-          <NumberInput />
+          <label className="text-center">Weight</label>
+          <input
+            value={weight}
+            type="number"
+            className="w-10"
+            required
+            onChange={(e) => setWeight(e.target.value)}
+          />
         </div>
         <div className="mx-2">
-          <p className="text-center">Reps</p>
-          <NumberInput />
+          <label className="text-center">Reps</label>
+          <input
+            value={reps}
+            type="number"
+            className="w-10"
+            required
+            onChange={(e) => setReps(e.target.value)}
+          />
         </div>
         <div>
           <button onClick={handleSaveSet}>Save Set</button>
@@ -45,3 +82,12 @@ const Workout = ({ exercise, setDailyExercises, dailyExercises }) => {
 };
 
 export default Workout;
+
+// <WorkoutNumbers
+// setDailyExercises={setDailyExercises}
+// dailyExercises={dailyExercises}
+// reps={reps}
+// setReps={setReps}
+// weight={weight}
+// setWeight={setWeight}
+// />
