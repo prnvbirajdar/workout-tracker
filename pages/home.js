@@ -10,6 +10,11 @@ const Home = () => {
   const [weight, setWeight] = useState(0); //input weights
   const [inputText, setinputText] = useState(""); //search input
   const [dailyExercises, setDailyExercises] = useState([]); //array of all the exercises
+  const [exerciseObj, setExerciseObj] = useState({
+    exercise: "",
+    time: "",
+    data: [],
+  });
 
   console.log(dailyExercises);
 
@@ -22,6 +27,8 @@ const Home = () => {
         setinputText={setinputText}
         dailyExercises={dailyExercises}
         setDailyExercises={setDailyExercises}
+        exerciseObj={exerciseObj}
+        setExerciseObj={setExerciseObj}
         suggestions={{
           posts: [
             {

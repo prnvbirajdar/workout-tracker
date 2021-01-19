@@ -24,8 +24,21 @@ const Workout = ({
     setReps(reps);
 
     setDailyExercises([
-      { ...dailyExercises.exercise, data: [{ set: { weight: weight, reps: reps } }] },
+      {
+        ...dailyExercises.exercise,
+        data: [{ set: { weight: weight, reps: reps } }],
+      },
     ]);
+
+    // setDailyExercises((prevState) => {
+    //   [
+    //     ...prevState,
+    //     {
+    //       ...prevState,
+    //       data: [{ set: { weight: weight, reps: reps } }],
+    //     },
+    //   ];
+    // });
   };
 
   const handleDelete = () => {

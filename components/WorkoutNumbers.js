@@ -1,6 +1,6 @@
-const WorkoutNumbers = () => {
-  return <div className="text-center flex justify-center">hi</div>;
-};
+// const WorkoutNumbers = () => {
+//   return <div className="text-center flex justify-center">hi</div>;
+// };
 
 // const WorkoutNumbers = () => {
 

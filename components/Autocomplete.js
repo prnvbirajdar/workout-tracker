@@ -7,6 +7,8 @@ const Autocomplete = ({
   inputText,
   dailyExercises,
   setDailyExercises,
+  exerciseObj,
+  setExerciseObj,
 }) => {
   const [displayOptions, setDisplayOptions] = useState(false); //if options are displayed or not
   const [options, setOptions] = useState([]); //render all the options
@@ -75,13 +77,25 @@ const Autocomplete = ({
   //sets inputText state, adds exercises to daily exercise array, sets inputText to empty
   const handleAddClick = () => {
     setinputText(inputText);
+
+ 
     setDailyExercises([
       ...dailyExercises,
+
       {
         exercise: inputText,
         time: moment().format("LL"),
+        data: [{ set: { weight: 0, reps: 0 } }],
+
       },
     ]);
+
+    setExerciseObj({
+      ...exerciseObj,
+      exercise: inputText,
+      time: moment().format("LL"),
+    });
+
     setinputText("");
   };
 
