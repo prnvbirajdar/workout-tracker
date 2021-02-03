@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
+import { Button } from '@windmill/react-ui'
+
 
 const Nav = () => {
   const [isOpen, setisOpen] = useState(false); //hamburger toggle
@@ -19,6 +21,7 @@ const Nav = () => {
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
                   />
+                  <Button>Hi there!</Button>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -43,7 +46,7 @@ const Nav = () => {
                           : "text-gray-300 hover:bg-gray-700 hover:text-white"
                       } px-3 py-2 rounded-md text-sm font-medium`}
                     >
-                      Team
+                      Calender
                     </a>
 
                     <a

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import moment from "moment";
+import produce from "immer";
 
 const Autocomplete = ({
   suggestions,
@@ -78,23 +79,21 @@ const Autocomplete = ({
   const handleAddClick = () => {
     setinputText(inputText);
 
- 
-    setDailyExercises([
-      ...dailyExercises,
-
-      {
-        exercise: inputText,
-        time: moment().format("LL"),
-        data: [{ set: { weight: 0, reps: 0 } }],
-
-      },
-    ]);
-
-    setExerciseObj({
-      ...exerciseObj,
-      exercise: inputText,
-      time: moment().format("LL"),
+    const currE = produce(exerciseObj, (draft) => {
+      draft.exercise = inputText;
+      draft.time = moment().format("LL");
+      draft.data = [{ set: { weight: 0, reps: 0 } }];
     });
+
+    setExerciseObj(currE);
+
+    setDailyExercises([...dailyExercises, exerciseObj]);
+
+    // setExerciseObj({
+    //   ...exerciseObj,
+    //   exercise: inputText,
+    //   time: moment().format("LL"),
+    // });
 
     setinputText("");
   };
@@ -103,6 +102,9 @@ const Autocomplete = ({
     const handleDisable = options.some((v) => v === inputText);
     setDisabled(handleDisable);
   }, []);
+
+  console.log(exerciseObj);
+  console.log(dailyExercises);
 
   return (
     <div className="flex flex-col items-center mt-10">

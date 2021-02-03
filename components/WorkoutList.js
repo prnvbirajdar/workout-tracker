@@ -11,7 +11,7 @@ const WorkoutList = ({
 }) => {
   return (
     <div className="flex flex-col items-center mt-10">
-      {dailyExercises.map((v, i) => (
+      {/*dailyExercises.map((v, i) => (
         <Workout
           key={i}
           exercise={v.exercise}
@@ -24,7 +24,7 @@ const WorkoutList = ({
           setWeight={setWeight}
           inputText={inputText}
         />
-      ))}
+      ))*/}
     </div>
   );
 };

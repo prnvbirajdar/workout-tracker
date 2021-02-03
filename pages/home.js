@@ -16,7 +16,6 @@ const Home = () => {
     data: [],
   });
 
-  console.log(dailyExercises);
 
   return (
     <div className="bg-gray-400 h-screen">
