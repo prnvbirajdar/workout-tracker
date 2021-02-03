@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState} from "react";
 import { Transition } from "@headlessui/react";
-import { Button } from '@windmill/react-ui'
-
+import { Button } from "@windmill/react-ui";
+import { useTheme } from "next-themes";
 
 const Nav = () => {
   const [isOpen, setisOpen] = useState(false); //hamburger toggle
   const [current, setCurrent] = useState("first"); //highlight nav options on large screens
   const [profileOpen, setProfileOpen] = useState(false); //profile toggle
+
+  const { theme, setTheme } = useTheme();
 
   return (
     <div>
@@ -21,10 +23,17 @@ const Nav = () => {
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
                   />
-                  <Button>Hi there!</Button>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
+                    <Button
+                      onClick={() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      }
+                    >
+                      {theme}
+                    </Button>
+
                     <a
                       onClick={() => setCurrent("first")}
                       href="#"

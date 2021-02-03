@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 //import ImageLight from '../assets/img/forgot-password-office.jpeg'
 //import ImageDark from '../assets/img/forgot-password-office-dark.jpeg'
 import { Label, Input, Button } from "@windmill/react-ui";
@@ -32,8 +34,10 @@ function ForgotPassword() {
                 <Input className="mt-1" placeholder="Jane Doe" />
               </Label>
 
-              <Button to="/login" block className="mt-4">
-                Recover password tag=Link
+              <Button block className="mt-4">
+                <Link href="/">
+                  <a> Recover password</a>
+                </Link>
               </Button>
             </div>
           </main>

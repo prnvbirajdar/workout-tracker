@@ -6,17 +6,11 @@ class MyDocument extends Document {
     return { ...initialProps };
   }
 
-  //   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-
   render() {
     return (
       <Html>
         <Head>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-          />
+          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         </Head>
         <body>
           <Main />
@@ -28,3 +22,10 @@ class MyDocument extends Document {
 }
 
 export default MyDocument;
+
+//   backup google font link
+//          <link rel="preconnect" href="https://fonts.gstatic.com" />
+//           <link
+//             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+//             rel="stylesheet"
+//           />
