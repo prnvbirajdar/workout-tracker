@@ -5,6 +5,7 @@ import EmptyLog from "../components/EmptyLog";
 import Autocomplete from "../components/Autocomplete";
 import WorkoutList from "../components/WorkoutList";
 
+
 const Home = () => {
   const [reps, setReps] = useState(0); //input reps
   const [weight, setWeight] = useState(0); //input weights
@@ -15,7 +16,6 @@ const Home = () => {
     time: "",
     data: [],
   });
-
 
   return (
     <div className="bg-gray-400 h-screen">

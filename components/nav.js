@@ -1,19 +1,42 @@
-import { useState} from "react";
+import { useState, useRef, useEffect } from "react";
 import { Transition } from "@headlessui/react";
-import { Button } from "@windmill/react-ui";
+import { Button, Dropdown, DropdownItem, Avatar } from "@windmill/react-ui";
 import { useTheme } from "next-themes";
 
 const Nav = () => {
-  const [isOpen, setisOpen] = useState(false); //hamburger toggle
+  //const [isOpen, setisOpen] = useState(false); //hamburger toggle
   const [current, setCurrent] = useState("first"); //highlight nav options on large screens
   const [profileOpen, setProfileOpen] = useState(false); //profile toggle
+  //const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
-  const { theme, setTheme } = useTheme();
+
+  const { theme, setTheme } = useTheme(); //dark mode
+
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        //setIsProfileMenuOpen(false);
+        setProfileOpen(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [wrapperRef]);
+
+  // const handleProfileImageClick = () =>
+  //   setIsProfileMenuOpen(!isProfileMenuOpen);
 
   return (
     <div>
       <div>
-        <nav className="bg-gray-800">
+        <nav className=" bg-white shadow-bottom dark:bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
@@ -24,16 +47,8 @@ const Nav = () => {
                     alt="Workflow"
                   />
                 </div>
-                <div className="hidden md:block">
+                <div className="md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <Button
-                      onClick={() =>
-                        setTheme(theme === "dark" ? "light" : "dark")
-                      }
-                    >
-                      {theme}
-                    </Button>
-
                     <a
                       onClick={() => setCurrent("first")}
                       href="#"
@@ -57,49 +72,26 @@ const Nav = () => {
                     >
                       Calender
                     </a>
-
-                    <a
-                      onClick={() => setCurrent("third")}
-                      href="#"
-                      className={`${
-                        current === "third"
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                      } px-3 py-2 rounded-md text-sm font-medium`}
-                    >
-                      Projects
-                    </a>
                   </div>
                 </div>
               </div>
-              <div className="hidden md:block">
+              <div className=" md:block">
                 <div className="ml-4 flex items-center md:ml-6">
-                  <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span className="sr-only">View notifications</span>
-                    <svg
-                      className="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
+                <Button
+                      onClick={() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      }
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                      />
-                    </svg>
-                  </button>
-
-                  <div className="ml-3 relative">
+                      {theme}
+                    </Button>
+                  <div className="ml-3 relative" ref={wrapperRef}>
                     <div>
                       <button
                         className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         id="user-menu"
                         aria-haspopup="true"
                         onClick={() => setProfileOpen(!profileOpen)}
+                        onKeyDown={() => setProfileOpen(!profileOpen)}
                       >
                         <span className="sr-only">Open user menu</span>
                         <img
@@ -128,14 +120,16 @@ const Nav = () => {
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
+                          tabIndex="0"
                         >
-                          Your Profile
+                          Profile
                         </a>
 
                         <a
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
+                          tabIndex="0"
                         >
                           Settings
                         </a>
@@ -144,6 +138,7 @@ const Nav = () => {
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
+                          tabIndex="0"
                         >
                           Sign out
                         </a>
@@ -152,8 +147,18 @@ const Nav = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  );
+};
 
-              <div className="-mr-2 flex md:hidden">
+export default Nav;
+
+{
+  /*div className="-mr-2 flex md:hidden">
                 <button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span className="sr-only">Open main menu</span>
 
@@ -191,11 +196,61 @@ const Nav = () => {
                     />
                   </svg>
                 </button>
-              </div>
-            </div>
-          </div>
+                    </div>*/
+}
 
-          <Transition
+{  {/*<ul
+  className="flex items-center flex-shrink-0 space-x-6"
+  ref={wrapperRef}
+>
+  <li className="relative">
+    <button
+      className="rounded-full focus:shadow-outline-purple focus:outline-none"
+      onClick={handleProfileImageClick}
+      aria-label="Account"
+      aria-haspopup="true"
+    >
+      <Avatar
+        className="align-middle"
+        src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+        alt=""
+        aria-hidden="true"
+      />
+    </button>
+    <Dropdown
+      align="right"
+      isOpen={isProfileMenuOpen}
+      onClose={() => console.log("hi")}
+    >
+      <DropdownItem tag="a" href="#">
+        <OutlinePersonIcon
+  className="w-4 h-4 mr-3"
+  aria-hidden="true"
+/> 
+        <span>Profile</span>
+      </DropdownItem>
+      <DropdownItem tag="a" href="#">
+         <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" /> 
+        <span>Settings</span>
+      </DropdownItem>
+      <DropdownItem onClick={() => alert("Log out!")}>
+       <OutlineLogoutIcon
+  className="w-4 h-4 mr-3"
+  aria-hidden="true"
+/>
+        <span>Log out</span>
+      </DropdownItem>
+    </Dropdown>
+  </li>
+</ul>
+
+
+*/}
+
+
+
+
+  /*<Transition
             show={isOpen}
             enter="transition ease-out duration-200 transform"
             enterFrom="opacity-0 scale-95"
@@ -269,11 +324,5 @@ const Nav = () => {
                 </div>
               </div>
             </div>
-          </Transition>
-        </nav>
-      </div>
-    </div>
-  );
-};
-
-export default Nav;
+          </Transition>*/
+}

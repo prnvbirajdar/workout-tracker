@@ -5,7 +5,7 @@ import Link from "next/link";
 //import { GithubIcon, TwitterIcon } from '../icons'
 import { Label, Input, Button } from "@windmill/react-ui";
 
-export default function IndexPage() {
+const IndexPage = () => {
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
@@ -76,7 +76,6 @@ export default function IndexPage() {
                 <Link href="/CreateAccount">
                   <a
                     className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                    to="/create-account"
                   >
                     Create account
                   </a>
@@ -88,7 +87,9 @@ export default function IndexPage() {
       </div>
     </div>
   );
-}
+};
+
+export default IndexPage;
 
 // export default function IndexPage() {
 //   return (
